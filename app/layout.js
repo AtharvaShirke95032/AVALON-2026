@@ -20,8 +20,11 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased relative`}
       >
+        {/* 🔹 NOISE BACKGROUND */}
+        <div className="noise-background-fixed pointer-events-none" />
+
         {children}
       </body>
     </html>
