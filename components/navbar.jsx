@@ -3,7 +3,7 @@ import Header from './ui/curved-menu'
 
 const Navbar = () => {
   return (
-    <div className="min-h-screen">
+    <div>
 			<Header/>
         </div>
   )
