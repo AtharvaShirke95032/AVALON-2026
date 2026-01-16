@@ -8,6 +8,7 @@ import {
 	useScroll,
 	useTransform,
 } from "framer-motion";
+import FuzzyText from "@/components/FuzzyText";
 
 const SmoothScrollHeroBackground = ({
 	scrollHeight,
@@ -24,6 +25,10 @@ const SmoothScrollHeroBackground = ({
 	const clipPath = useMotionTemplate`polygon(${clipStart}% ${clipStart}%, ${clipEnd}% ${clipStart}%, ${clipEnd}% ${clipEnd}%, ${clipStart}% ${clipEnd}%)`;
 
 	const backgroundSize = useTransform(scrollY, [0, scrollHeight + 500], ["170%", "100%"]);
+	
+	// Text and button opacity - appear as user scrolls
+	const textOpacity = useTransform(scrollY, [scrollHeight * 0.3, scrollHeight * 0.7], [0, 1]);
+	const textY = useTransform(scrollY, [scrollHeight * 0.3, scrollHeight * 0.7], [30, 0]);
 
 	return (
         <motion.div
@@ -50,6 +55,29 @@ const SmoothScrollHeroBackground = ({
 					backgroundPosition: "center",
 					backgroundRepeat: "no-repeat",
 				}} />
+            
+            {/* Text and Button Content */}
+            <motion.div
+                className="absolute inset-0 flex flex-col items-center justify-end pb-32 md:pb-40 z-10 px-4"
+                style={{
+					opacity: textOpacity,
+					y: textY,
+				}}>
+                <motion.h1 
+                    className="text-white text-4xl md:text-6xl lg:text-7xl font-bold text-center mb-6 uppercase tracking-wider"
+                    style={{
+						textShadow: "2px 2px 8px rgba(0, 0, 0, 0.8)",
+					}}>
+                    Where Technology Meets Innovation
+                </motion.h1>
+                <motion.button
+                    className="px-8 py-4 bg-white text-black font-bold text-lg uppercase tracking-wider hover:bg-white/90 transition-colors duration-300 mt-4"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                >
+                    register now
+                </motion.button>
+            </motion.div>
         </motion.div>
     );
 };
@@ -71,6 +99,12 @@ const SmoothScrollHero = ({
        window.scrollTo(0, 0);
    }, []);
 
+   const {scrollY} = useScroll();
+   
+   // 404 text opacity - disappear as user scrolls
+   const error404Opacity = useTransform(scrollY, [0, scrollHeight * 0.5], [1, 0]);
+   const error404Scale = useTransform(scrollY, [0, scrollHeight * 0.5], [1, 0.8]);
+
    return (
        <div
            style={{height: `calc(${scrollHeight}px + 100vh)`}}
@@ -81,6 +115,40 @@ const SmoothScrollHero = ({
                mobileImage={mobileImage}
                initialClipPercentage={initialClipPercentage}
                finalClipPercentage={finalClipPercentage} />
+           
+           {/* 404 Text - Left Side (outside clipped container) */}
+           <motion.div
+               className="fixed left-4 md:left-8 top-1/2 -translate-y-1/2 z-30 pointer-events-none"
+               style={{
+                   opacity: error404Opacity,
+                   scale: error404Scale,
+               }}>
+               <FuzzyText
+                   baseIntensity={0.2}
+                   hoverIntensity={0.5}
+                   enableHover={true}
+                   fontSize="clamp(3rem, 8vw, 8rem)"
+               >
+                   EXPLORE THE DIGITAL FRONTIER
+               </FuzzyText>
+           </motion.div>
+           
+           {/* 404 Text - Right Side (outside clipped container) */}
+           <motion.div
+               className="fixed right-4 md:right-8 top-1/2 -translate-y-1/2 z-30 pointer-events-none"
+               style={{
+                   opacity: error404Opacity,
+                   scale: error404Scale,
+               }}>
+               <FuzzyText
+                   baseIntensity={0.2}
+                   hoverIntensity={0.5}
+                   enableHover={true}
+                   fontSize="clamp(3rem, 8vw, 8rem)"
+               >
+                   
+               </FuzzyText>
+           </motion.div>
        </div>
    );
 };
