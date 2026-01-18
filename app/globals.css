@@ -93,7 +93,8 @@
   height: 100vh;
 
   background-image:
-    linear-gradient(rgba(0, 13, 33, 0.88), rgba(0, 13, 33, 0.88)),
+    /* linear-gradient(rgba(0, 13, 33, 0.88), rgba(0, 13, 33, 0.88)), */
+    linear-gradient(rgba(239, 171, 35, 0.86), rgba(230, 121, 38, 0.88)),
     url("/noise.gif");
 
   background-repeat: repeat;

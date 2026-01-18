@@ -8,8 +8,8 @@ const HeroScroll = () => {
 					scrollHeight={1500}
 					desktopImage="/new4.png"
 					mobileImage="/newmob.png"
-					initialClipPercentage={25}
-					finalClipPercentage={75}
+					initialClipPercentage={50}
+					finalClipPercentage={50}
 				/>
 	</div>
   )

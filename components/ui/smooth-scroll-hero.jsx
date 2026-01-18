@@ -116,38 +116,24 @@ const SmoothScrollHero = ({
                initialClipPercentage={initialClipPercentage}
                finalClipPercentage={finalClipPercentage} />
            
-           {/* 404 Text - Left Side (outside clipped container) */}
+           {/* Centered Fuzzy Text (outside clipped container) */}
            <motion.div
-               className="fixed left-4 md:left-8 top-1/2 -translate-y-1/2 z-30 pointer-events-none"
+               className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-30 pointer-events-none w-full px-4 md:px-8"
                style={{
                    opacity: error404Opacity,
                    scale: error404Scale,
                }}>
-               <FuzzyText
-                   baseIntensity={0.2}
-                   hoverIntensity={0.5}
-                   enableHover={true}
-                   fontSize="clamp(3rem, 8vw, 8rem)"
-               >
-                   EXPLORE THE DIGITAL FRONTIER
-               </FuzzyText>
-           </motion.div>
-           
-           {/* 404 Text - Right Side (outside clipped container) */}
-           <motion.div
-               className="fixed right-4 md:right-8 top-1/2 -translate-y-1/2 z-30 pointer-events-none"
-               style={{
-                   opacity: error404Opacity,
-                   scale: error404Scale,
-               }}>
-               <FuzzyText
-                   baseIntensity={0.2}
-                   hoverIntensity={0.5}
-                   enableHover={true}
-                   fontSize="clamp(3rem, 8vw, 8rem)"
-               >
-                   
-               </FuzzyText>
+               <div className="flex items-center justify-center w-full">
+                   <FuzzyText
+                       baseIntensity={0.2}
+                       hoverIntensity={0.5}
+                       enableHover={true}
+                       fontSize="clamp(3.5rem, 8vw, 8rem)"
+                       className="text-center"
+                   >
+                       EXPLORE THE DIGITAL FRONTIER
+                   </FuzzyText>
+               </div>
            </motion.div>
        </div>
    );
