@@ -1,13 +1,45 @@
 "use client";
 
-import React from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import CyberpunkButton from './ui/CyberpunkButton';
+import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 
 const EventCard = ({ title, date, prizePool, registration, description, image, link, onRegister }) => {
+    const x = useMotionValue(0);
+    const y = useMotionValue(0);
+
+    const mouseXSpring = useSpring(x);
+    const mouseYSpring = useSpring(y);
+
+    const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["17.5deg", "-17.5deg"]);
+    const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-17.5deg", "17.5deg"]);
+
+    const handleMouseMove = (e) => {
+        const rect = e.currentTarget.getBoundingClientRect();
+        const width = rect.width;
+        const height = rect.height;
+        const mouseX = e.clientX - rect.left;
+        const mouseY = e.clientY - rect.top;
+        const xPct = mouseX / width - 0.5;
+        const yPct = mouseY / height - 0.5;
+        x.set(xPct);
+        y.set(yPct);
+    };
+
+    const handleMouseLeave = () => {
+        x.set(0);
+        y.set(0);
+    };
+
     return (
-        <div className="cyber-box group overflow-hidden flex flex-col h-full bg-black/60 backdrop-blur-sm border-cyber-cyan/30 hover:border-cyber-cyan transition-all duration-500">
-            <div className="relative h-48 w-full overflow-hidden">
+        <motion.div
+            onMouseMove={handleMouseMove}
+            onMouseLeave={handleMouseLeave}
+            style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
+            className="cyber-box group overflow-hidden flex flex-col h-full bg-black/60 backdrop-blur-sm border-cyber-cyan/30 hover:border-cyber-cyan transition-all duration-500"
+        >
+            <div className="relative h-48 w-full overflow-hidden" style={{ transform: "translateZ(50px)" }}>
                 {/* Decorative corner accents */}
                 <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-cyber-cyan z-20"></div>
                 <div className="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-cyber-pink z-20"></div>
@@ -24,7 +56,7 @@ const EventCard = ({ title, date, prizePool, registration, description, image, l
                 </div>
             </div>
 
-            <div className="p-5 flex flex-col flex-1 relative">
+            <div className="p-5 flex flex-col flex-1 relative" style={{ transform: "translateZ(30px)" }}>
                 <h3 className="text-2xl font-black text-cyber-yellow mb-1 glitch-text tracking-tighter uppercase" data-text={title}>{title}</h3>
                 <div className="flex items-center gap-2 mb-3">
                     <div className="h-[1px] flex-1 bg-cyber-cyan/30"></div>
@@ -32,7 +64,7 @@ const EventCard = ({ title, date, prizePool, registration, description, image, l
                     <div className="h-[1px] flex-1 bg-cyber-cyan/30"></div>
                 </div>
 
-                <p className="text-white/70 text-xs leading-relaxed mb-6 font-sans italic opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                <p className="text-white/80 text-sm leading-relaxed mb-6 font-sans opacity-100 group-hover:text-white transition-colors duration-300">
                     {description}
                 </p>
 
@@ -50,7 +82,7 @@ const EventCard = ({ title, date, prizePool, registration, description, image, l
                     )}
                 </div>
             </div>
-        </div>
+        </motion.div>
     );
 };
 

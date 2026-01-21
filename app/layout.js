@@ -24,12 +24,15 @@ export const metadata = {
   description: "Official Techfest of Terna Engineering College. February 2026.",
 };
 
+import CustomCursor from "@/components/ui/CustomCursor";
+
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" className="dark scroll-smooth">
       <body
-        className={`${vt323.variable} ${geistSans.variable} ${geistMono.variable} font-vt323 antialiased relative`}
+        className={`${vt323.variable} ${geistSans.variable} ${geistMono.variable} font-vt323 antialiased relative hide-cursor`}
       >
+        <CustomCursor />
         {/* 🔹 NOISE BACKGROUND */}
         <div className="noise-background-fixed pointer-events-none" />
         <div className="crt-overlay" />

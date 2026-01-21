@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import CyberpunkButton from './ui/CyberpunkButton';
 import Image from 'next/image';
+import confetti from 'canvas-confetti';
 
 const RegistrationForm = ({ eventName, onClose }) => {
     const [step, setStep] = useState(1);
@@ -58,6 +59,12 @@ const RegistrationForm = ({ eventName, onClose }) => {
 
             const result = await response.json();
             if (result.success) {
+                confetti({
+                    particleCount: 150,
+                    spread: 70,
+                    origin: { y: 0.6 },
+                    colors: ['#00f0ff', '#ff003c', '#fcee0a']
+                });
                 alert("UPLOAD SUCCESSFUL. DATA COMMITTED TO THE GRID.");
                 onClose();
             } else {
@@ -91,7 +98,7 @@ const RegistrationForm = ({ eventName, onClose }) => {
                                 <input
                                     type="text" name="teamName" required={!isIndividual}
                                     placeholder="CRITICAL_UNIT_ID"
-                                    className="w-full bg-black/40 border-b-2 border-cyber-cyan/30 p-2 focus:border-cyber-cyan outline-none transition-all placeholder:text-white/20"
+                                    className="w-full bg-black/60 border-b-2 border-cyber-cyan/30 p-2 focus:border-cyber-cyan outline-none transition-all placeholder:text-white/30 font-sans text-sm"
                                     onChange={handleChange} value={formData.teamName}
                                 />
                             </div>
@@ -100,7 +107,7 @@ const RegistrationForm = ({ eventName, onClose }) => {
                                 <input
                                     type="text" name="leadName" required
                                     placeholder={isIndividual ? "YOUR_NAME" : "LEAD_IDENTITY"}
-                                    className="w-full bg-black/40 border-b-2 border-cyber-cyan/30 p-2 focus:border-cyber-cyan outline-none transition-all placeholder:text-white/20"
+                                    className="w-full bg-black/60 border-b-2 border-cyber-cyan/30 p-2 focus:border-cyber-cyan outline-none transition-all placeholder:text-white/30 font-sans text-sm"
                                     onChange={handleChange} value={formData.leadName}
                                 />
                             </div>
@@ -110,7 +117,7 @@ const RegistrationForm = ({ eventName, onClose }) => {
                             <input
                                 type="email" name="email" required
                                 placeholder="COMM_CHANNEL@GRID.NET"
-                                className="w-full bg-black/40 border-b-2 border-cyber-cyan/30 p-2 focus:border-cyber-cyan outline-none transition-all placeholder:text-white/20"
+                                className="w-full bg-black/60 border-b-2 border-cyber-cyan/30 p-2 focus:border-cyber-cyan outline-none transition-all placeholder:text-white/30 font-sans text-sm"
                                 onChange={handleChange} value={formData.email}
                             />
                         </div>
@@ -119,7 +126,7 @@ const RegistrationForm = ({ eventName, onClose }) => {
                             <input
                                 type="tel" name="phone" required
                                 placeholder="+91 XXXX XXXX"
-                                className="w-full bg-black/40 border-b-2 border-cyber-cyan/30 p-2 focus:border-cyber-cyan outline-none transition-all placeholder:text-white/20"
+                                className="w-full bg-black/60 border-b-2 border-cyber-cyan/30 p-2 focus:border-cyber-cyan outline-none transition-all placeholder:text-white/30 font-sans text-sm"
                                 onChange={handleChange} value={formData.phone}
                             />
                         </div>
@@ -134,7 +141,7 @@ const RegistrationForm = ({ eventName, onClose }) => {
                             <input
                                 type="text" name="college" required
                                 placeholder="COLLEGE_OR_INSTITUTE"
-                                className="w-full bg-black/40 border-b-2 border-cyber-cyan/30 p-2 focus:border-cyber-cyan outline-none transition-all placeholder:text-white/20"
+                                className="w-full bg-black/60 border-b-2 border-cyber-cyan/30 p-2 focus:border-cyber-cyan outline-none transition-all placeholder:text-white/30 font-sans text-sm"
                                 onChange={handleChange} value={formData.college}
                             />
                         </div>
@@ -143,7 +150,7 @@ const RegistrationForm = ({ eventName, onClose }) => {
                                 <label className="block text-cyber-cyan text-xs mb-1 uppercase tracking-tighter">// SQUAD_SIZE</label>
                                 <select
                                     name="members"
-                                    className="w-full bg-black/40 border-b-2 border-cyber-cyan/30 p-2 focus:border-cyber-cyan outline-none transition-all"
+                                    className="w-full bg-black/60 border-b-2 border-cyber-cyan/30 p-2 focus:border-cyber-cyan outline-none transition-all font-sans text-sm"
                                     onChange={handleChange} value={formData.members}
                                 >
                                     <option value="2">02 OPERATIVES</option>
