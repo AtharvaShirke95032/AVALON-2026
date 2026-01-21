@@ -87,7 +87,7 @@ const EventSection = ({ onRegisterClick }) => {
             title: "ROBO RACE",
             date: "9 FEB 2026",
             prizePool: "16,000",
-            registration: "₹400 PER TEAM",
+            registration: "₹150 INDIVIDUAL",
             description: "Design. Drive. Conquer. A thrilling robotics competition testing speed, precision, and control on a challenging track.",
             image: "/assets/uploaded_image_3_1768972872857.jpg",
             onRegister: () => onRegisterClick("ROBO RACE")

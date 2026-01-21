@@ -2,19 +2,30 @@
 
 import React, { useState } from 'react';
 import CyberpunkButton from './ui/CyberpunkButton';
+import Image from 'next/image';
 
 const RegistrationForm = ({ eventName, onClose }) => {
     const [step, setStep] = useState(1);
     const [formData, setFormData] = useState({
-        teamName: "",
+        teamName: eventName === "ROBO RACE" || eventName === "CAD COMPETITION" ? "INDIVIDUAL_ENTRY" : "",
         leadName: "",
         email: "",
         phone: "",
-        members: "2",
+        members: eventName === "ROBO RACE" || eventName === "CAD COMPETITION" ? "1" : "2",
         college: "",
         event: eventName || "ROBO RACE",
         screenshot: null
     });
+
+    const eventFees = {
+        "ROBO SOCCER": "300",
+        "REVERSE CODING": "250",
+        "ROBO RACE": "150",
+        "CAD COMPETITION": "150",
+        "INNOVATIVE PAPERWEIGHT": "200"
+    };
+
+    const isIndividual = formData.event === "ROBO RACE" || formData.event === "CAD COMPETITION";
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -75,20 +86,20 @@ const RegistrationForm = ({ eventName, onClose }) => {
                 {step === 1 && (
                     <div className="space-y-4 animate-in fade-in slide-in-from-right-4">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div>
+                            <div className={isIndividual ? "hidden" : ""}>
                                 <label className="block text-cyber-cyan text-xs mb-1 uppercase tracking-tighter shadow-cyber-cyan/20">// TEAM_DESIGNATION</label>
                                 <input
-                                    type="text" name="teamName" required
+                                    type="text" name="teamName" required={!isIndividual}
                                     placeholder="CRITICAL_UNIT_ID"
                                     className="w-full bg-black/40 border-b-2 border-cyber-cyan/30 p-2 focus:border-cyber-cyan outline-none transition-all placeholder:text-white/20"
                                     onChange={handleChange} value={formData.teamName}
                                 />
                             </div>
-                            <div>
-                                <label className="block text-cyber-cyan text-xs mb-1 uppercase tracking-tighter">// OPS_LEAD_COMMANDER</label>
+                            <div className={isIndividual ? "col-span-2" : ""}>
+                                <label className="block text-cyber-cyan text-xs mb-1 uppercase tracking-tighter">// {isIndividual ? "PARTICIPANT_IDENTITY" : "OPS_LEAD_COMMANDER"}</label>
                                 <input
                                     type="text" name="leadName" required
-                                    placeholder="LEAD_IDENTITY"
+                                    placeholder={isIndividual ? "YOUR_NAME" : "LEAD_IDENTITY"}
                                     className="w-full bg-black/40 border-b-2 border-cyber-cyan/30 p-2 focus:border-cyber-cyan outline-none transition-all placeholder:text-white/20"
                                     onChange={handleChange} value={formData.leadName}
                                 />
@@ -127,18 +138,20 @@ const RegistrationForm = ({ eventName, onClose }) => {
                                 onChange={handleChange} value={formData.college}
                             />
                         </div>
-                        <div>
-                            <label className="block text-cyber-cyan text-xs mb-1 uppercase tracking-tighter">// SQUAD_SIZE</label>
-                            <select
-                                name="members"
-                                className="w-full bg-black/40 border-b-2 border-cyber-cyan/30 p-2 focus:border-cyber-cyan outline-none transition-all"
-                                onChange={handleChange} value={formData.members}
-                            >
-                                <option value="2">02 OPERATIVES</option>
-                                <option value="3">03 OPERATIVES</option>
-                                <option value="4">04 OPERATIVES</option>
-                            </select>
-                        </div>
+                        {!isIndividual && (
+                            <div>
+                                <label className="block text-cyber-cyan text-xs mb-1 uppercase tracking-tighter">// SQUAD_SIZE</label>
+                                <select
+                                    name="members"
+                                    className="w-full bg-black/40 border-b-2 border-cyber-cyan/30 p-2 focus:border-cyber-cyan outline-none transition-all"
+                                    onChange={handleChange} value={formData.members}
+                                >
+                                    <option value="2">02 OPERATIVES</option>
+                                    <option value="3">03 OPERATIVES</option>
+                                    <option value="4">04 OPERATIVES</option>
+                                </select>
+                            </div>
+                        )}
                         <div className="flex gap-4 mt-8">
                             <CyberpunkButton color="pink" type="button" onClick={prevStep} className="flex-1">BACKTRACK</CyberpunkButton>
                             <CyberpunkButton color="yellow" type="button" onClick={nextStep} className="flex-1">VALIDATE_CREDITS</CyberpunkButton>
@@ -150,13 +163,16 @@ const RegistrationForm = ({ eventName, onClose }) => {
                     <div className="space-y-6 animate-in fade-in slide-in-from-right-4">
                         <div className="bg-white/5 p-4 border-l-4 border-cyber-yellow">
                             <p className="text-cyber-yellow font-bold uppercase mb-2">Payment Details</p>
-                            <p className="text-sm">Amount to Pay: <span className="text-lg">₹400</span></p>
-                            <p className="text-sm">UPI ID: <span className="text-cyber-cyan">example@upi</span></p>
-                            <div className="mt-4 flex justify-center">
-                                {/* Placeholder for QR Code */}
-                                <div className="w-48 h-48 bg-white/10 flex items-center justify-center border-2 border-dashed border-cyber-cyan">
-                                    <span className="text-xs text-center px-4 opacity-50">QR CODE WILL BE INSERTED HERE</span>
-                                </div>
+                            <p className="text-sm">Amount to Pay: <span className="text-lg text-cyber-cyan">₹{eventFees[formData.event] || "0"}</span></p>
+                            <p className="text-sm">UPI ID: <span className="text-cyber-pink">rajsalunke541@okhdfcbank</span></p>
+                            <div className="mt-4 flex justify-center py-4 bg-white/10 cyber-box border-cyber-cyan/30">
+                                <Image
+                                    src="/assets/payment_qr.png"
+                                    alt="UPI QR Code"
+                                    width={200}
+                                    height={200}
+                                    className="invert"
+                                />
                             </div>
                         </div>
 
